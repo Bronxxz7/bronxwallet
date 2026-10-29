@@ -1,0 +1,298 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #3974ff;
+  --color-background: #080d17;
+  --color-surface: #111d30;
+  --color-success: #22c58b;
+  --color-danger: #fb6575;
+  --color-savings: #a78bfa;
+  --font-sans: "Inter", sans-serif;
+}
+
+:root {
+  font-family: "Inter", sans-serif;
+  color: #f8fafc;
+  background: #080d17;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: #080d17;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #080d17;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+input,
+select,
+textarea {
+  color-scheme: dark;
+}
+
+button,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid #6595ff;
+  outline-offset: 3px;
+}
+
+::selection {
+  background: #3974ff;
+  color: white;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #33445f;
+  border-radius: 10px;
+}
+
+/* Tarjetas */
+
+.fm-card {
+  background: #111d30;
+  border: 1px solid rgba(255,255,255,.075);
+  border-radius: 20px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.12);
+}
+
+.fm-glass {
+  background: rgba(17,29,48,.92);
+  border: 1px solid rgba(255,255,255,.10);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* Tarjeta principal */
+
+.fm-balance {
+  background: linear-gradient(
+    125deg,
+    #172b4c 0%,
+    #12336e 60%,
+    #164bb5 100%
+  );
+  border: 1px solid rgba(110,153,255,.25);
+  border-radius: 24px;
+  box-shadow: 0 16px 36px rgba(15,50,120,.18);
+}
+
+/* Botones */
+
+.fm-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #3974ff;
+  color: white;
+  border: 0;
+  border-radius: 14px;
+  font-weight: 600;
+  min-height: 46px;
+  padding: 12px 18px;
+  transition: background .18s ease, transform .18s ease;
+}
+
+.fm-button:hover {
+  background: #5085ff;
+}
+
+.fm-button:active {
+  transform: scale(.98);
+}
+
+/* Inputs */
+
+.fm-input {
+  width: 100%;
+  min-height: 48px;
+  background: #080d17;
+  color: #f8fafc;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  padding: 12px 15px;
+  outline: none;
+  transition: border-color .2s ease;
+}
+
+.fm-input:focus {
+  border-color: #3974ff;
+}
+
+.fm-input::placeholder {
+  color: #64748b;
+}
+
+/* Bottom sheet */
+
+.fm-sheet {
+  background: rgba(17,29,48,.97);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -16px 60px rgba(0,0,0,.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: fm-slide-up .24s ease-out;
+}
+
+@keyframes fm-slide-up {
+  from {
+    opacity: .6;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Navegación inferior */
+
+.fm-bottom-nav {
+  background: rgba(17,29,48,.95);
+  border-top: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+.fm-fab {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #3974ff;
+  color: white;
+  box-shadow: 0 8px 24px rgba(57,116,255,.32);
+  transition: transform .2s ease;
+}
+
+.fm-fab:active {
+  transform: scale(.94);
+}
+
+/* Valores financieros */
+
+.fm-income {
+  color: #22c58b;
+}
+
+.fm-expense {
+  color: #fb6575;
+}
+
+.fm-savings {
+  color: #a78bfa;
+}
+
+/* Barras de progreso */
+
+.fm-progress {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #24344e;
+}
+
+.fm-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: #3974ff;
+  transition: width .3s ease;
+}
+
+/* Animaciones discretas */
+
+.fm-fade-in {
+  animation: fm-fade .25s ease-out;
+}
+
+@keyframes fm-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* Ajustes móviles */
+
+@media (max-width: 480px) {
+  .fm-card {
+    border-radius: 18px;
+  }
+
+  .fm-balance {
+    border-radius: 22px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}

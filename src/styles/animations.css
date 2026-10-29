@@ -1,0 +1,342 @@
+
+:root {
+  --bronx-bg: #080a0e;
+  --bronx-card: #11151d;
+  --bronx-blue: #3974ff;
+  --bronx-border: rgba(255,255,255,.075);
+  --bronx-ease: cubic-bezier(.22,1,.36,1);
+}
+
+body,
+#root {
+  background: var(--bronx-bg);
+}
+
+/* FONDO GENERAL */
+
+.bronx-dashboard {
+  background:
+    radial-gradient(
+      ellipse 75% 18% at 50% -8%,
+      rgba(45,87,175,.055),
+      transparent 80%
+    ),
+    var(--bronx-bg);
+}
+
+/* TARJETAS */
+
+.bronx-card {
+  background: linear-gradient(
+    155deg,
+    rgba(23,28,38,.98),
+    rgba(13,17,24,.98)
+  );
+  border: 1px solid var(--bronx-border);
+  border-radius: 19px;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.15),
+    inset 0 1px 0 rgba(255,255,255,.035);
+}
+
+/* SALDO PRINCIPAL */
+
+.bronx-balance {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 22px;
+
+  background:
+    radial-gradient(
+      ellipse 55% 70% at 100% 110%,
+      rgba(50,108,255,.28),
+      transparent 90%
+    ),
+    linear-gradient(
+      130deg,
+      #151a23,
+      #10151e 65%,
+      #172342
+    );
+
+  border: 1px solid rgba(110,138,199,.15);
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.24),
+    inset 0 1px 0 rgba(255,255,255,.065);
+}
+
+.bronx-balance::after {
+  content: "";
+  position: absolute;
+  left: 25%;
+  right: -15%;
+  bottom: -24px;
+  height: 55px;
+  background: rgba(57,116,255,.34);
+  filter: blur(29px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* BILLETERAS */
+
+.bronx-wallet {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 15px;
+  background: #141923;
+  border: 1px solid rgba(255,255,255,.075);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+  transition:
+    transform .25s var(--bronx-ease),
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+@media (hover: hover) {
+  .bronx-wallet:hover {
+    transform: translateY(-3px);
+    border-color: rgba(87,133,233,.24);
+    box-shadow: 0 12px 26px rgba(0,0,0,.25);
+  }
+}
+
+.bronx-wallet:active {
+  transform: scale(.98);
+}
+
+/* GRÁFICOS */
+
+.bronx-chart-card {
+  background:
+    radial-gradient(
+      ellipse 60% 35% at 55% 100%,
+      rgba(57,116,255,.045),
+      transparent 90%
+    ),
+    #11151d;
+  border: 1px solid rgba(255,255,255,.075);
+  border-radius: 20px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+}
+
+/* BOTONES */
+
+.bronx-primary-button {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg,#5186ff,#2863ed);
+  color: white;
+  border: 1px solid rgba(164,193,255,.3);
+  box-shadow:
+    0 5px 18px rgba(57,116,255,.19),
+    inset 0 1px 0 rgba(255,255,255,.23);
+  transition: transform .2s ease;
+}
+
+.bronx-primary-button:active {
+  transform: scale(.96);
+}
+
+.fm-premium-button {
+  position: relative;
+  overflow: hidden;
+  transition: transform .2s ease;
+}
+
+.fm-premium-button:active {
+  transform: scale(.97);
+}
+
+.fm-field-animated {
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.fm-field-animated:focus {
+  border-color: #3974ff;
+  box-shadow: 0 0 0 3px rgba(57,116,255,.10);
+}
+
+/* NUEVA NAVEGACIÓN LIQUID GLASS */
+
+.bronx-liquid-nav {
+  isolation: isolate;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(25,29,41,.94),
+      rgba(10,12,19,.97)
+    );
+
+  border: 1px solid rgba(255,255,255,.10);
+
+  box-shadow:
+    0 18px 45px rgba(0,0,0,.58),
+    0 2px 10px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.09),
+    inset 0 -1px 0 rgba(255,255,255,.025);
+
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+}
+
+.bronx-liquid-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+  background: linear-gradient(
+    110deg,
+    rgba(255,255,255,.065),
+    transparent 35%,
+    rgba(255,255,255,.018) 75%,
+    transparent
+  );
+}
+
+.bronx-nav-add {
+  color: white;
+  background:
+    linear-gradient(
+      155deg,
+      #6797ff 0%,
+      #3974ff 45%,
+      #2054d4 100%
+    );
+
+  border: 1px solid rgba(190,211,255,.38);
+
+  box-shadow:
+    0 5px 20px rgba(57,116,255,.25),
+    inset 0 1px 0 rgba(255,255,255,.30),
+    inset 0 -2px 5px rgba(0,0,0,.12);
+}
+
+/* CARGA */
+
+@keyframes bronx-shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+.fm-skeleton {
+  background: linear-gradient(
+    90deg,
+    #151b25 0%,
+    #222b3a 50%,
+    #151b25 100%
+  );
+  background-size: 200% 100%;
+  animation: bronx-shimmer 1.8s linear infinite;
+  border-radius: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fm-skeleton {
+    animation: none;
+  }
+
+  .bronx-wallet,
+  .bronx-primary-button,
+  .fm-premium-button,
+  .fm-field-animated {
+    transition: none;
+  }
+}
+
+/* BRONXWALLET — Dark Liquid Glass */
+
+.bronx-movement-sheet {
+  background:
+    radial-gradient(
+      ellipse at 50% -18%,
+      rgba(60, 100, 180, 0.075),
+      transparent 55%
+    ),
+    linear-gradient(
+      155deg,
+      rgba(22, 27, 36, 0.99),
+      rgba(9, 12, 18, 0.995) 65%
+    );
+
+  box-shadow:
+    0 -1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 90px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+.bronx-movement-sheet::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  pointer-events: none;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(140, 170, 225, 0.2),
+    transparent
+  );
+}
+
+.bronx-movement-sheet input,
+.bronx-movement-sheet select {
+  color-scheme: dark;
+}
+
+.bronx-amount-input {
+  caret-color: #83a9ff;
+  font-variant-numeric: tabular-nums;
+}
+
+.bronx-amount-input:focus {
+  text-shadow: 0 0 25px rgba(100, 145, 255, 0.12);
+}
+
+.bronx-movement-submit {
+  position: relative;
+  overflow: hidden;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 10px 28px rgba(0, 0, 0, 0.24);
+
+  transition:
+    filter 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.bronx-movement-submit:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.bronx-movement-submit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background: linear-gradient(
+    110deg,
+    transparent 15%,
+    rgba(255, 255, 255, 0.09) 48%,
+    transparent 80%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bronx-movement-submit {
+    transition: none;
+  }
+}

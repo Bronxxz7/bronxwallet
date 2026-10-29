@@ -1,0 +1,35 @@
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-container {
+  width: 100%;
+  max-width: 512px;
+  margin: 0 auto;
+  padding: 24px 16px 112px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: #f8fafc;
+}
+
+.muted-text {
+  color: #94a3b8;
+}
+
+@media (min-width: 768px) {
+  .page-container {
+    padding-top: 36px;
+  }
+}
