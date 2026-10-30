@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
@@ -5,7 +6,7 @@ import {
   House,
   ArrowLeftRight,
   Plus,
-  ChartNoAxesColumn,
+  BrainCircuit,
   Wallet as WalletIcon,
 } from "lucide-react";
 
@@ -19,17 +20,18 @@ import SettingsPage from "./pages/Settings";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
+import IntelligenceDashboard from "./components/intelligence/IntelligenceDashboard";
 import QuickAddSheet from "./components/transactions/QuickAddSheet";
 
 import { useAuthContext } from "./contexts/AuthContext";
 import { useWallets } from "./hooks/useWallets";
-
 import { saveMovement } from "./services/transactionService";
 
 type Page =
   | "dashboard"
   | "transactions"
   | "reports"
+  | "intelligence"
   | "wallets"
   | "savings"
   | "budgets"
@@ -39,6 +41,7 @@ const paths: Record<Page, string> = {
   dashboard: "/",
   transactions: "/transactions",
   reports: "/reports",
+  intelligence: "/intelligence",
   wallets: "/wallets",
   savings: "/savings",
   budgets: "/budgets",
@@ -53,15 +56,17 @@ function pageFromPath(pathname: string): Page {
   return entry?.[0] ?? "dashboard";
 }
 
+type BottomNavProps = {
+  activePage: Page;
+  onNavigate: (page: Page) => void;
+  onAdd: () => void;
+};
+
 function BottomNav({
   activePage,
   onNavigate,
   onAdd,
-}: {
-  activePage: Page;
-  onNavigate: (page: Page) => void;
-  onAdd: () => void;
-}) {
+}: BottomNavProps) {
   const items = [
     {
       page: "dashboard" as const,
@@ -74,9 +79,9 @@ function BottomNav({
       Icon: ArrowLeftRight,
     },
     {
-      page: "reports" as const,
-      label: "Reportes",
-      Icon: ChartNoAxesColumn,
+      page: "intelligence" as const,
+      label: "BRONX AI",
+      Icon: BrainCircuit,
     },
     {
       page: "wallets" as const,
@@ -88,28 +93,64 @@ function BottomNav({
   return (
     <nav
       aria-label="Navegación principal"
-      className="pointer-events-none fixed bottom-4 left-1/2 z-50 w-[calc(100%-24px)] max-w-[470px] -translate-x-1/2"
+      className="
+        pointer-events-none
+        fixed
+        bottom-[max(12px,env(safe-area-inset-bottom))]
+        left-1/2
+        z-50
+        w-[calc(100%-32px)]
+        max-w-[440px]
+        -translate-x-1/2
+      "
     >
-      <div className="pointer-events-auto relative flex items-center justify-around rounded-[26px] border border-white/[0.11] bg-[#11151E]/95 px-2 py-2 shadow-[0_14px_45px_rgba(0,0,0,0.55)] backdrop-blur-2xl">
+      <div
+        className="
+          pointer-events-auto
+          relative
+          flex
+          items-center
+          justify-around
+          rounded-[26px]
+          border
+          border-white/[0.11]
+          bg-[#11151E]/95
+          px-2
+          py-2
+          shadow-[0_14px_45px_rgba(0,0,0,0.55)]
+          backdrop-blur-2xl
+        "
+      >
         <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-        {items.slice(0, 2).map(({ page, label, Icon }) => (
-          <button
-            key={page}
-            type="button"
-            onClick={() => onNavigate(page)}
-            className={`flex min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-2xl py-2 transition-colors ${
-              activePage === page
-                ? "text-[#80A7FF]"
-                : "text-slate-500 hover:text-slate-300"
-            }`}
-          >
-            <Icon size={21} />
-            <span className="text-[9px] font-medium">
-              {label}
-            </span>
-          </button>
-        ))}
+        {items.slice(0, 2).map(
+          ({ page, label, Icon }) => (
+            <button
+              key={page}
+              type="button"
+              aria-current={
+                activePage === page ? "page" : undefined
+              }
+              onClick={() => onNavigate(page)}
+              className={`
+                flex min-w-0 flex-1 flex-col
+                items-center justify-center gap-1
+                rounded-2xl py-2 transition-colors
+                ${
+                  activePage === page
+                    ? "text-[#80A7FF]"
+                    : "text-slate-500 hover:text-slate-300"
+                }
+              `}
+            >
+              <Icon size={21} />
+
+              <span className="text-[9px] font-medium">
+                {label}
+              </span>
+            </button>
+          )
+        )}
 
         <motion.button
           type="button"
@@ -117,28 +158,48 @@ function BottomNav({
           onClick={onAdd}
           whileTap={{ scale: 0.91 }}
           whileHover={{ y: -2 }}
-          className="relative mx-1 flex h-14 w-14 shrink-0 items-center justify-center rounded-[20px] border border-blue-300/30 bg-gradient-to-br from-[#5685F4] to-[#285DDC] text-white shadow-[0_6px_24px_rgba(57,116,255,0.24)]"
+          className="
+            relative mx-1 flex h-14 w-14 shrink-0
+            items-center justify-center
+            rounded-[20px]
+            border border-blue-300/30
+            bg-gradient-to-br
+            from-[#5685F4] to-[#285DDC]
+            text-white
+            shadow-[0_6px_24px_rgba(57,116,255,0.24)]
+          "
         >
           <Plus size={28} strokeWidth={2.1} />
         </motion.button>
 
-        {items.slice(2).map(({ page, label, Icon }) => (
-          <button
-            key={page}
-            type="button"
-            onClick={() => onNavigate(page)}
-            className={`flex min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-2xl py-2 transition-colors ${
-              activePage === page
-                ? "text-[#80A7FF]"
-                : "text-slate-500 hover:text-slate-300"
-            }`}
-          >
-            <Icon size={21} />
-            <span className="text-[9px] font-medium">
-              {label}
-            </span>
-          </button>
-        ))}
+        {items.slice(2).map(
+          ({ page, label, Icon }) => (
+            <button
+              key={page}
+              type="button"
+              aria-current={
+                activePage === page ? "page" : undefined
+              }
+              onClick={() => onNavigate(page)}
+              className={`
+                flex min-w-0 flex-1 flex-col
+                items-center justify-center gap-1
+                rounded-2xl py-2 transition-colors
+                ${
+                  activePage === page
+                    ? "text-[#80A7FF]"
+                    : "text-slate-500 hover:text-slate-300"
+                }
+              `}
+            >
+              <Icon size={21} />
+
+              <span className="text-[9px] font-medium">
+                {label}
+              </span>
+            </button>
+          )
+        )}
       </div>
     </nav>
   );
@@ -148,23 +209,23 @@ export default function App() {
   const { user, loading } = useAuthContext();
   const { wallets } = useWallets();
 
-  const [activePage, setActivePage] = useState<Page>(() =>
-    pageFromPath(window.location.pathname)
+  const [activePage, setActivePage] = useState<Page>(
+    () => pageFromPath(window.location.pathname)
   );
 
-  const [showQuickAdd, setShowQuickAdd] = useState(false);
+  const [showQuickAdd, setShowQuickAdd] =
+    useState(false);
 
   const [authPath, setAuthPath] = useState(
-    window.location.pathname
+    () => window.location.pathname
   );
 
   useEffect(() => {
     function syncLocation() {
-      setActivePage(
-        pageFromPath(window.location.pathname)
-      );
+      const currentPath = window.location.pathname;
 
-      setAuthPath(window.location.pathname);
+      setActivePage(pageFromPath(currentPath));
+      setAuthPath(currentPath);
     }
 
     window.addEventListener("popstate", syncLocation);
@@ -178,8 +239,15 @@ export default function App() {
   }, []);
 
   function navigate(page: Page) {
-    window.history.pushState({}, "", paths[page]);
+    const nextPath = paths[page];
+
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState({}, "", nextPath);
+    }
+
     setActivePage(page);
+    setAuthPath(nextPath);
+    setShowQuickAdd(false);
 
     window.scrollTo({
       top: 0,
@@ -246,6 +314,9 @@ export default function App() {
       case "reports":
         return <Reports />;
 
+      case "intelligence":
+        return <IntelligenceDashboard />;
+
       case "wallets":
         return <Wallets />;
 
@@ -259,33 +330,60 @@ export default function App() {
         return <SettingsPage />;
 
       default:
-        return <Dashboard />;
+        return (
+          <Dashboard
+            onNavigate={(page) => {
+              if (page in paths) {
+                navigate(page as Page);
+              }
+            }}
+          />
+        );
     }
   }
 
   return (
-    <div className="min-h-dvh bg-[#080A0E] text-white">
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={activePage}
-          initial={{ opacity: 0, y: 9 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -7 }}
-          transition={{
-            duration: 0.22,
-            ease: "easeOut",
-          }}
-        >
-          {renderPage()}
-        </motion.div>
-      </AnimatePresence>
+    <div className="min-h-dvh overflow-x-clip bg-[#080A0E] text-white">
+      {/* CONTENEDOR PRINCIPAL */}
+      <main
+        className="
+          mx-auto
+          min-h-dvh
+          w-full
+          max-w-5xl
+          px-4
+          pt-4
+          pb-[calc(9rem+env(safe-area-inset-bottom))]
+          sm:px-6
+          sm:pt-6
+          lg:px-8
+        "
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={activePage}
+            initial={{ opacity: 0, y: 9 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -7 }}
+            transition={{
+              duration: 0.22,
+              ease: "easeOut",
+            }}
+            className="min-w-0"
+          >
+            {renderPage()}
+          </motion.div>
+        </AnimatePresence>
+      </main>
 
+      {/* NAVEGACIÓN INFERIOR FLOTANTE */}
       <BottomNav
         activePage={activePage}
         onNavigate={navigate}
         onAdd={() => setShowQuickAdd(true)}
       />
 
+      {/* REGISTRO RÁPIDO DE MOVIMIENTOS */}
       <QuickAddSheet
         open={showQuickAdd}
         onClose={() => setShowQuickAdd(false)}
